@@ -7,24 +7,25 @@ begin <- beginDateTime - firstDateTime
 beginLine <- as.numeric(begin) * 24 * 60 + 1 # first line to read in
 numLines <- 48 * 60 # total number of minutes in 48 hours, total number of rows to read in
 
-data1 <- read.csv('household_power_consumption.txt', sep = ';', skip = beginLine, nrows = numLines, na.strings = '?', header = FALSE)
-names(data1) <- names(data) # Restore the column headers
+data <- read.csv('household_power_consumption.txt', sep = ';', skip = beginLine, nrows = numLines, na.strings = '?', header = FALSE)
+data$V1 <- as.Date(data$V1,'%d/%m/%Y')
+dates <- as.POSIXlt(paste(data$V1, data$V2, " "))
 
 ## Plot 4
 
 png(filename = 'plot4.png', width = 480, height = 480)
 
 par(mfrow = c(2 ,2))
-plot(dates, data1[[3]], xlab = "", ylab = "Global Active Power", type = 'l')
+plot(dates, data[[3]], xlab = "", ylab = "Global Active Power", type = 'l')
 
-plot(dates, data1[[5]], xlab = 'datetime', ylab = 'Voltage', type = 'l')
+plot(dates, data[[5]], xlab = 'datetime', ylab = 'Voltage', type = 'l')
 
-plot(dates, data1[[7]], type = "l", xlab = "", ylab = 'Energy sub metering')
-lines(dates, data1[[8]], type = "l", col = 'red')
-lines(dates, data1[[9]], type = "l", col = 'blue')
+plot(dates, data[[7]], type = "l", xlab = "", ylab = 'Energy sub metering')
+lines(dates, data[[8]], type = "l", col = 'red')
+lines(dates, data[[9]], type = "l", col = 'blue')
 legend('topright', lwd = 1, col = c('black', 'red', 'blue'), legend = c('Sub_metering_1', 'Sub_metering_2', 'Sub_metering_3'), bty = 'n')
 
-plot(dates, data1[[4]], xlab = 'datetime', ylab = names(data)[4], type = 'l')
+plot(dates, data[[4]], xlab = 'datetime', ylab = names(data)[4], type = 'l')
 
 ## Copy my plot to a PNG file
 #dev.copy(png, file = "plot4.png")
