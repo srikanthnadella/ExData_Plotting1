@@ -25,7 +25,7 @@ lines(dates, data[[8]], type = "l", col = 'red')
 lines(dates, data[[9]], type = "l", col = 'blue')
 legend('topright', lwd = 1, col = c('black', 'red', 'blue'), legend = c('Sub_metering_1', 'Sub_metering_2', 'Sub_metering_3'), bty = 'n')
 
-plot(dates, data[[4]], xlab = 'datetime', ylab = names(data)[4], type = 'l')
+plot(dates, data[[4]], xlab = 'datetime', ylab = 'Global_reactive_power', type = 'l')
 
 ## Copy my plot to a PNG file
 #dev.copy(png, file = "plot4.png")
