@@ -4,11 +4,10 @@ beginDateTime <- strptime("2007-02-01 00:00:00", "%Y-%m-%d %H:%M:%S")
 
 # Calculate which lines to read in
 begin <- beginDateTime - firstDateTime
-beginLine <- as.numeric(begin) * 24 * 60 # first line to read in
+beginLine <- as.numeric(begin) * 24 * 60 + 1# first line to read in
 numLines <- 48 * 60 # total number of minutes in 48 hours, total number of rows to read in
 
-data <- read.csv('household_power_consumption.txt', sep = ';', skip = 66636, nrows = 2880)
-
+data <- read.csv('household_power_consumption.txt', sep = ';', skip = beginLine, nrows = numLines, na.strings = '?', header = FALSE)
 ## Plot 1
 png(filename = 'plot1.png', width = 480, height = 480)
 hist(data[[3]], col = 'red', main = 'Global Active Power', xlab = 'Global Active Power (kilowatts)')
